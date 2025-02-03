@@ -26,12 +26,12 @@ jobs:
         egress-policy: audit
 
     - name: Checkout Code  
-      uses: actions/checkout@v4
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         fetch-depth: 1
 
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@3951f0dfe7a07e2313ec93c75700083e2005cbab # v4.3.0
       with:
         dotnet-version: |
           8.x
@@ -47,7 +47,7 @@ jobs:
       run: dotnet test --configuration Release --no-build --no-restore --verbosity normal --logger trx --collect:"XPlat Code Coverage"
 
     - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
-      uses: danielpalme/ReportGenerator-GitHub-Action@v5
+      uses: danielpalme/ReportGenerator-GitHub-Action@c38c522d4b391c1b0da979cbb2e902c0a252a7dc # v5.4.3
       with:
         reports: "**/*.cobertura.xml" # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
         targetdir: "${{ github.workspace }}" # REQUIRED # The directory where the generated report should be saved.
@@ -59,14 +59,14 @@ jobs:
         toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
 
     - name: Upload Combined Coverage XML
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
       with:
         name: coverage
         path: ${{ github.workspace }}/Cobertura.xml
         retention-days: 5
    
     - name: Publish Code Coverage Report
-      uses: irongut/CodeCoverageSummary@v1.3.0
+      uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 # v1.3.0
       with:
         filename: "Cobertura.xml"
         badge: true
@@ -79,14 +79,14 @@ jobs:
         thresholds: "10 30"
 
     - name: Upload Test Result Files
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
       with:
         name: test-results
         path: ${{ github.workspace }}/**/TestResults/**/*
         retention-days: 5
 
     - name: Publish Test Results
-      uses: step-security/publish-unit-test-result-action@v2
+      uses: step-security/publish-unit-test-result-action@cc82caac074385ae176d39d2d143ad05e1130b2d # v2.18.0
       if: always()
       with:
         trx_files: "${{ github.workspace }}/**/*.trx"

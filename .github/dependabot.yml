@@ -4,3 +4,18 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+
+  - package-ecosystem: nuget
+    directory: /ChinhDo.Transactions.FileManager
+    schedule:
+      interval: daily
+
+  - package-ecosystem: nuget
+    directory: /ChinhDo.Transactions.FileManagerTest
+    schedule:
+      interval: daily
